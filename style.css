@@ -1,1 +1,260 @@
-body{margin:0;overflow:hidden;background:#111}canvas{display:block}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+    background:
+    linear-gradient(
+        180deg,
+        #080b1f,
+        #15193a,
+        #26184b
+    );
+
+    color:white;
+}
+
+canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+.hidden{
+    display:none !important;
+}
+
+#hud{
+
+    position:fixed;
+
+    top:15px;
+    left:15px;
+    right:15px;
+
+    display:flex;
+
+    justify-content:
+    space-between;
+
+    z-index:100;
+}
+
+.panel{
+
+    background:
+    rgba(
+        0,
+        0,
+        0,
+        .35
+    );
+
+    border:
+    1px solid
+    rgba(
+        255,
+        255,
+        255,
+        .15
+    );
+
+    backdrop-filter:
+    blur(10px);
+
+    border-radius:
+    18px;
+
+    padding:
+    12px 18px;
+
+    min-width:
+    160px;
+}
+
+.title{
+
+    font-size:
+    18px;
+
+    font-weight:
+    bold;
+
+    margin-bottom:
+    8px;
+
+    color:
+    #ffb8da;
+}
+
+#message-box{
+
+    position:fixed;
+
+    top:90px;
+
+    left:50%;
+
+    transform:
+    translateX(-50%);
+
+    z-index:100;
+
+    pointer-events:none;
+}
+
+#message-text{
+
+    background:
+    rgba(
+        255,
+        105,
+        180,
+        .2
+    );
+
+    border:
+    1px solid
+    rgba(
+        255,
+        255,
+        255,
+        .15
+    );
+
+    padding:
+    10px 18px;
+
+    border-radius:
+    30px;
+
+    font-size:
+    18px;
+
+    text-align:center;
+}
+
+#start-screen,
+#victory-screen{
+
+    position:fixed;
+
+    inset:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    z-index:500;
+
+    background:
+    rgba(
+        0,
+        0,
+        0,
+        .85
+    );
+
+    padding:
+    20px;
+}
+
+#start-screen h1,
+#victory-screen h1{
+
+    font-size:
+    48px;
+
+    margin-bottom:
+    20px;
+}
+
+#start-screen p,
+#victory-screen p{
+
+    font-size:
+    22px;
+
+    margin-bottom:
+    20px;
+}
+
+button{
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:
+    14px 28px;
+
+    border-radius:
+    30px;
+
+    font-size:
+    20px;
+
+    font-weight:bold;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff4d88,
+        #ff7ab6
+    );
+
+    transition:
+    .25s;
+}
+
+button:hover{
+
+    transform:
+    scale(1.05);
+}
+
+#final-letter{
+
+    max-width:
+    600px;
+
+    line-height:
+    1.8;
+
+    margin:
+    25px 0;
+
+    background:
+    rgba(
+        255,
+        255,
+        255,
+        .08
+    );
+
+    padding:
+    20px;
+
+    border-radius:
+    20px;
+}

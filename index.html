@@ -1,1 +1,94 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><title>Salva Nuestro Amor</title><link rel='stylesheet' href='style.css'></head><body><canvas id='gameCanvas'></canvas><script src='player.js'></script><script src='enemies.js'></script><script src='powerups.js'></script><script src='boss.js'></script><script src='script.js'></script></body></html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️ Salva Nuestro Amor 🚀</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="hud">
+
+        <div class="panel">
+            <div class="title">❤️ Mi Ojitos de Uva ❤️</div>
+
+            <div>
+                Nivel:
+                <span id="level">1</span>
+            </div>
+
+            <div>
+                Puntos:
+                <span id="score">0</span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div>
+                ❤️ Vidas:
+                <span id="lives">5</span>
+            </div>
+
+            <div>
+                🔫 Arma:
+                <span id="weapon-level">1</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="message-box">
+        <div id="message-text">
+            Protege nuestro amor ❤️
+        </div>
+    </div>
+
+    <div id="start-screen">
+        <h1>❤️🚀 SALVA NUESTRO AMOR 🚀❤️</h1>
+
+        <p>
+            Protege el corazón de Mi Ojitos de Uva.
+        </p>
+
+        <button id="start-btn">
+            Comenzar
+        </button>
+    </div>
+
+    <div id="victory-screen" class="hidden">
+
+        <h1>❤️ VICTORIA ❤️</h1>
+
+        <p>
+            Has protegido nuestro amor.
+        </p>
+
+        <div id="final-letter">
+
+            Mi Ojitos de Uva:
+
+            Gracias por existir.
+
+            Eres la persona más especial de mi vida.
+
+            Te amo muchísimo ❤️
+
+        </div>
+
+        <button id="restart-btn">
+            Jugar Otra Vez
+        </button>
+
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <script src="player.js"></script>
+    <script src="enemies.js"></script>
+    <script src="powerups.js"></script>
+    <script src="boss.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>

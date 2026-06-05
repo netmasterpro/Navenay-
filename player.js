@@ -1,7 +1,15 @@
 // player.js
 
 class Bullet {
-    constructor(x, y, vx, vy, damage = 1) {
+
+    constructor(
+        x,
+        y,
+        vx,
+        vy,
+        damage = 1
+    ){
+
         this.x = x;
         this.y = y;
 
@@ -15,37 +23,49 @@ class Bullet {
         this.active = true;
     }
 
-    update() {
+    update(){
+
         this.x += this.vx;
         this.y += this.vy;
 
-        if (
+        if(
             this.x < -50 ||
             this.x > canvas.width + 50 ||
             this.y < -50 ||
             this.y > canvas.height + 50
-        ) {
+        ){
             this.active = false;
         }
     }
 
-    draw(ctx) {
+    draw(ctx){
+
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = "#ffd6e7";
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.radius,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle =
+        "#ffd6e7";
+
         ctx.fill();
     }
 }
 
 class Player {
 
-    constructor() {
+    constructor(){
 
-        this.x = canvas.width / 2;
-        this.y = canvas.height - 180;
+        this.x = 0;
+        this.y = 0;
 
-        this.targetX = this.x;
-        this.targetY = this.y;
+        this.targetX = 0;
+        this.targetY = 0;
 
         this.radius = 28;
 
@@ -54,142 +74,182 @@ class Player {
         this.weaponLevel = 1;
 
         this.fireRate = 250;
+
         this.lastShot = 0;
 
         this.lives = 5;
 
         this.shield = false;
+
         this.shieldTime = 0;
 
         this.bullets = [];
     }
 
-    update(deltaTime) {
+    update(deltaTime){
+
+        if(
+            this.x === 0 &&
+            this.y === 0
+        ){
+
+            this.x =
+            canvas.width / 2;
+
+            this.y =
+            canvas.height - 180;
+
+            this.targetX =
+            this.x;
+
+            this.targetY =
+            this.y;
+        }
 
         this.x +=
-            (this.targetX - this.x) *
-            this.speed;
+        (
+            this.targetX -
+            this.x
+        ) * this.speed;
 
         this.y +=
-            (this.targetY - this.y) *
-            this.speed;
+        (
+            this.targetY -
+            this.y
+        ) * this.speed;
+
+        this.x = Math.max(
+            this.radius,
+            Math.min(
+                canvas.width -
+                this.radius,
+                this.x
+            )
+        );
+
+        this.y = Math.max(
+            this.radius,
+            Math.min(
+                canvas.height -
+                this.radius,
+                this.y
+            )
+        );
 
         this.autoShoot();
 
         this.bullets.forEach(
-            bullet => bullet.update()
+            bullet =>
+            bullet.update()
         );
 
         this.bullets =
-            this.bullets.filter(
-                bullet => bullet.active
-            );
+        this.bullets.filter(
+            bullet =>
+            bullet.active
+        );
 
-        if (this.shield) {
+        if(this.shield){
 
-            this.shieldTime -= deltaTime;
+            this.shieldTime -=
+            deltaTime;
 
-            if (this.shieldTime <= 0) {
+            if(
+                this.shieldTime <= 0
+            ){
 
-                this.shield = false;
-                this.shieldTime = 0;
+                this.shield =
+                false;
+
+                this.shieldTime =
+                0;
             }
         }
     }
 
-    autoShoot() {
+    autoShoot(){
 
-        const now = performance.now();
+        const now =
+        performance.now();
 
-        if (
-            now - this.lastShot <
+        if(
+            now -
+            this.lastShot <
             this.fireRate
-        ) {
+        ){
             return;
         }
 
         this.lastShot = now;
 
-        switch (this.weaponLevel) {
+        if(
+            this.weaponLevel === 1
+        ){
 
-            case 1:
+            this.spawnBullet(
+                this.x,
+                this.y - 25,
+                0,
+                -10
+            );
 
-                this.spawnBullet(
-                    this.x,
-                    this.y - 25,
-                    0,
-                    -10
-                );
+            return;
+        }
 
-                break;
+        if(
+            this.weaponLevel === 2
+        ){
 
-            case 2:
+            this.spawnBullet(
+                this.x - 10,
+                this.y - 25,
+                0,
+                -10
+            );
 
-                this.spawnBullet(
-                    this.x - 10,
-                    this.y - 25,
-                    0,
-                    -10
-                );
+            this.spawnBullet(
+                this.x + 10,
+                this.y - 25,
+                0,
+                -10
+            );
 
-                this.spawnBullet(
-                    this.x + 10,
-                    this.y - 25,
-                    0,
-                    -10
-                );
+            return;
+        }
 
-                break;
+        const shots =
+        Math.min(
+            this.weaponLevel,
+            6
+        );
 
-            case 3:
+        for(
+            let i = 0;
+            i < shots;
+            i++
+        ){
 
-                this.spawnBullet(
-                    this.x,
-                    this.y - 25,
-                    0,
-                    -11
-                );
+            const offset =
+            (
+                i -
+                (shots - 1) / 2
+            ) * 12;
 
-                this.spawnBullet(
-                    this.x - 12,
-                    this.y - 25,
-                    -1,
-                    -10
-                );
-
-                this.spawnBullet(
-                    this.x + 12,
-                    this.y - 25,
-                    1,
-                    -10
-                );
-
-                break;
-
-            default:
-
-                for (
-                    let i = 0;
-                    i < this.weaponLevel;
-                    i++
-                ) {
-
-                    const offset =
-                        (i - this.weaponLevel / 2) * 8;
-
-                    this.spawnBullet(
-                        this.x + offset,
-                        this.y - 25,
-                        offset * 0.05,
-                        -12
-                    );
-                }
-
-                break;
+            this.spawnBullet(
+                this.x + offset,
+                this.y - 25,
+                offset * 0.05,
+                -12
+            );
         }
     }
 
-    spawnBullet(x, y, vx, vy) {
+    spawnBullet(
+        x,
+        y,
+        vx,
+        vy
+    ){
 
         this.bullets.push(
 
@@ -198,48 +258,54 @@ class Player {
                 y,
                 vx,
                 vy,
-                1
+                Math.ceil(
+                    this.weaponLevel / 2
+                )
             )
 
         );
     }
 
-    upgradeWeapon() {
+    upgradeWeapon(){
 
-        if (
+        if(
             this.weaponLevel < 10
-        ) {
+        ){
 
             this.weaponLevel++;
         }
     }
 
-    addShield(seconds = 5) {
+    addShield(
+        seconds = 5
+    ){
 
         this.shield = true;
 
         this.shieldTime =
-            seconds * 1000;
+        seconds * 1000;
     }
 
-    takeDamage() {
+    takeDamage(){
 
-        if (this.shield) {
+        if(
+            this.shield
+        ){
             return;
         }
 
         this.lives--;
 
-        if (this.lives < 0) {
+        if(
+            this.lives < 0
+        ){
             this.lives = 0;
         }
     }
 
-    draw(ctx) {
+    draw(ctx){
 
-        ctx.save();
-
-        if (this.shield) {
+        if(this.shield){
 
             ctx.beginPath();
 
@@ -252,33 +318,41 @@ class Player {
             );
 
             ctx.fillStyle =
-                "rgba(150,220,255,0.25)";
+            "rgba(120,220,255,.25)";
 
             ctx.fill();
         }
 
-        ctx.fillStyle = "#ffffff";
+        ctx.save();
+
+        ctx.translate(
+            this.x,
+            this.y
+        );
+
+        ctx.fillStyle =
+        "#ffffff";
 
         ctx.beginPath();
 
         ctx.moveTo(
-            this.x,
-            this.y - 30
+            0,
+            -30
         );
 
         ctx.lineTo(
-            this.x - 18,
-            this.y + 18
+            -18,
+            20
         );
 
         ctx.lineTo(
-            this.x,
-            this.y + 10
+            0,
+            10
         );
 
         ctx.lineTo(
-            this.x + 18,
-            this.y + 18
+            18,
+            20
         );
 
         ctx.closePath();
@@ -288,7 +362,8 @@ class Player {
         ctx.restore();
 
         this.bullets.forEach(
-            bullet => bullet.draw(ctx)
+            bullet =>
+            bullet.draw(ctx)
         );
     }
 }

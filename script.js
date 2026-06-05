@@ -614,7 +614,7 @@ function update(deltaTime){
     score;
 
     livesElement.textContent =
-    heart.lives;
+    player.lives;
 
     weaponElement.textContent =
     player.weaponLevel;

@@ -1,0 +1,1 @@
+const Enemies=[]; function spawnEnemy(type='small'){ Enemies.push({type,hp:type==='small'?1:3}); }

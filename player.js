@@ -1,0 +1,1 @@
+const Player={x:400,y:500,weaponLevel:1,lives:5,update(){},draw(){}};

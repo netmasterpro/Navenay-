@@ -1,0 +1,1 @@
+const Boss={active:false,hp:1000,start(){this.active=true;}};

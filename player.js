@@ -40,12 +40,18 @@ class Player {
         this.bullets = [];
     }
 
+    // Fuerza la ubicación correcta sin importar el tamaño del display
+    initPosition(){
+        this.x = canvas.width / 2;
+        this.y = canvas.height - 180;
+        this.targetX = this.x;
+        this.targetY = this.y;
+    }
+
     update(deltaTime){
+        // Respaldo de seguridad si arranca en ceros
         if(this.x === 0 && this.y === 0){
-            this.x = canvas.width / 2;
-            this.y = canvas.height - 180;
-            this.targetX = this.x;
-            this.targetY = this.y;
+            this.initPosition();
         }
 
         this.x += (this.targetX - this.x) * this.speed;

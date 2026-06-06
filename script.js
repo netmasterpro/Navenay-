@@ -58,15 +58,24 @@ function setTarget(x, y){
     player.targetY = y;
 }
 
+// Evento para computadoras
 canvas.addEventListener("mousemove", e => {
     setTarget(e.clientX, e.clientY);
 });
 
-canvas.addEventListener("touchmove", e => {
-    const touch = e.touches[0];
-    // Offset de -60 para que el dedo del usuario no tape la nave en el celular
-    setTarget(touch.clientX, touch.clientY - 60);
-}, { passive:true });
+// Función unificada para móviles (Evita scrolls y congelamientos)
+function handleTouch(e) {
+    e.preventDefault(); // Detiene el comportamiento elástico del navegador móvil
+    if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        // Conserva tu excelente idea del offset de -60
+        setTarget(touch.clientX, touch.clientY - 60);
+    }
+}
+
+// Eventos táctiles corregidos sin modo pasivo
+canvas.addEventListener("touchstart", handleTouch, { passive: false });
+canvas.addEventListener("touchmove", handleTouch, { passive: false });
 
 function showMessage(text){
     messageElement.textContent = text;
@@ -119,7 +128,6 @@ function handleEnemyPlayerCollisions(){
 }
 
 function handleBossCollisions(){
-    // Si el jefe no está activo o aún no ha terminado de entrar, ignorar balas
     if(!boss.active || !boss.entered) return;
 
     player.bullets.forEach(bullet => {
@@ -146,7 +154,6 @@ function updateLevel(){
 }
 
 function spawnEnemies(){
-    // No spawnear enemigos comunes si ya estamos en el nivel del Jefe Final
     if(level >= 10) return;
 
     spawnTimer++;
@@ -169,9 +176,12 @@ function spawnEnemies(){
 function update(deltaTime){
     if(!gameRunning) return;
 
-    gameTime += deltaTime;
+    // Forzar límites de seguridad por cambios bruscos de rendimiento de CPU móvil
+    const stableDelta = Math.min(deltaTime, 30);
+
+    gameTime += stableDelta;
     heart.update();
-    player.update(deltaTime);
+    player.update(stableDelta);
     updateEnemies(heart.x, heart.y);
     updatePowerUps(player);
 
@@ -246,6 +256,9 @@ function resetGame(){
     player.weaponLevel = 1;
     player.shield = false;
     boss.active = false;
+    
+    // Forzamos la ubicación inicial de la nave al iniciar/reiniciar
+    player.initPosition();
 }
 
 function gameLoop(timestamp){

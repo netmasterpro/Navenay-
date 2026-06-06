@@ -15,10 +15,14 @@ class Boss {
         this.entered = false;
         this.hp = this.maxHp;
         this.y = -200;
+        this.x = canvas.width / 2; // Asegura centrado dinámico al aparecer
     }
 
     update(){
         if(!this.active) return;
+
+        // Actualizar posición X en caso de que redimensionen la pantalla
+        this.x = canvas.width / 2;
 
         if(!this.entered){
             this.y += 1;
@@ -52,7 +56,7 @@ class Boss {
     }
 
     drawHealthBar(ctx){
-        const width = 400;
+        const width = Math.min(400, canvas.width - 40); // Responsivo para pantallas angostas
         const height = 20;
         const x = canvas.width/2 - width/2;
         const y = 30;

@@ -19,6 +19,8 @@ canvas{
     inset:0;
     width:100%;
     height:100%;
+    /* Desactiva pellizcos, zooms y gestos nativos del celular */
+    touch-action: none; 
 }
 
 #hud{
@@ -37,11 +39,11 @@ canvas{
     backdrop-filter: blur(10px);
     border-radius: 18px;
     padding: 12px 18px;
-    min-width: 160px;
+    min-width: 130px; /* Un poco más compacto para pantallas móviles */
 }
 
 .title{
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 8px;
     color: #ffb8da;
@@ -49,11 +51,13 @@ canvas{
 
 #message-box{
     position:fixed;
-    top:90px;
+    top:100px; /* Bajado un poco para no chocar con muescas de cámaras frontales */
     left:50%;
     transform: translateX(-50%);
     z-index:100;
     pointer-events:none;
+    width: 90%;
+    max-width: 300px;
 }
 
 #message-text{
@@ -61,7 +65,7 @@ canvas{
     border: 1px solid rgba(255, 255, 255, .15);
     padding: 10px 18px;
     border-radius: 30px;
-    font-size: 18px;
+    font-size: 16px;
     text-align:center;
 }
 
@@ -79,7 +83,6 @@ canvas{
     padding: 20px;
 }
 
-/* Corrección crítica para asegurar que se oculten */
 #start-screen.hidden,
 #victory-screen.hidden {
     display: none !important;
@@ -87,13 +90,13 @@ canvas{
 
 #start-screen h1,
 #victory-screen h1{
-    font-size: 48px;
+    font-size: 32px; /* Más adaptado a pantallas verticales móviles */
     margin-bottom: 20px;
 }
 
 #start-screen p,
 #victory-screen p{
-    font-size: 22px;
+    font-size: 18px;
     margin-bottom: 20px;
 }
 
@@ -114,11 +117,13 @@ button:hover{
 }
 
 #final-letter{
+    width: 100%;
     max-width: 600px;
     line-height: 1.8;
     margin: 25px 0;
     background: rgba(255, 255, 255, .08);
     padding: 20px;
     border-radius: 20px;
-    white-space: pre-line; /* Mantiene el formato de poema/carta */
+    white-space: pre-line;
+    font-size: 16px;
 }
